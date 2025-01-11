@@ -3,7 +3,7 @@ import { useId } from "react";
 import * as Yup from "yup";
 import css from "./ContactForm.module.css";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsSlice";
+import { addContact } from "../../redux/contactsOps";
 
 const ContactForm = () => {
 	const id = useId();
@@ -17,7 +17,6 @@ const ContactForm = () => {
 	const handleSubmit = (values, actions) => {
 		dispatch(
 			addContact({
-				id: crypto.randomUUID(),
 				name: values.name,
 				number: values.number,
 			})
@@ -25,7 +24,7 @@ const ContactForm = () => {
 		actions.resetForm();
 	};
 
-	const phoneRegex = /\d{3}-\d{2}-\d{2}/;
+	const phoneRegex = /\d{3}-\d{3}-\d{4}/;
 	const validationSchema = Yup.object().shape({
 		name: Yup.string()
 			.min(3, "Name must be at least 3 characters")
